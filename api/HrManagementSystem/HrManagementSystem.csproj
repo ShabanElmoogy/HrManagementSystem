@@ -1,0 +1,85 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\ShabanElmogy\.nuget\packages\select.htmltopdf.netcore\24.1.0\contentFiles\any\any\Select.Html.dep" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="9.4.0" />
+	  <PackageReference Include="ClosedXML" Version="0.105.0" />
+	  <PackageReference Include="EFCore.BulkExtensions" Version="9.0.1" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+	  <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
+	  <PackageReference Include="Hangfire" Version="1.8.20" />
+	  <PackageReference Include="Mapster" Version="7.4.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.5" />
+
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
+	  <PackageReference Include="QRCoder" Version="1.6.0" />
+	  <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Shared" Version="1.5.0" />
+	  <PackageReference Include="Syncfusion.Blazor.SfPdfViewer" Version="29.2.9" />
+
+	  <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+	  <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.5.0" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Select.HtmlToPdf.NetCore" Version="25.2.0" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+	  <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.2.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+
+	  <PackageReference Include="AspNetCore.HealthChecks.Hangfire" Version="9.0.0" />
+	  <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="9.0.0" />
+	  <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+	  <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="9.0.0" />
+
+	  <PackageReference Include="MailKit" Version="4.12.1" />
+
+	  <PackageReference Include="Hangfire.AspNetCore" Version="1.8.20" />
+	  <PackageReference Include="Hangfire.Core" Version="1.8.20" />
+	  <PackageReference Include="Hangfire.Dashboard.Basic.Authentication" Version="8.0.0" />
+	  <PackageReference Include="Hangfire.SqlServer" Version="1.8.20" />
+
+	  <PackageReference Include="System.Globalization" Version="4.3.0" />
+	  <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.5" />
+
+	  <PackageReference Include="FluentValidation" Version="12.0.0" />
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+
+	  <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+	  <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
+	  <PackageReference Include="System.Security.Permissions" Version="9.0.5" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\BasicEntities\KanbanEntities\" />
+    <Folder Include="Persistance\EntitiesConfigurations\NewFolder\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+</Project>
