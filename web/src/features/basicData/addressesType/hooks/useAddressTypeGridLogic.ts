@@ -1,9 +1,9 @@
 import { showToast } from "@/shared/components";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef, GridApiCommon } from "@mui/x-data-grid";
+import { useGridApiRef, GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AddressType } from "../types/AddressType";
+import { AddressType, UpdateAddressTypeRequest } from "../types/AddressType";
 import {
   useAddressTypes,
   useCreateAddressType,
@@ -19,7 +19,7 @@ interface UseAddressTypeGridLogicReturn {
   selectedItem: AddressType | null;
   loading: boolean;
   items: AddressType[];
-  apiRef: React.MutableRefObject<GridApiCommon>;
+  apiRef: React.MutableRefObject<GridApi>;
   error: any;
   isFetching: boolean;
   openDialog: (type: AddressTypeDialogType, item?: AddressType | null) => void;
@@ -146,7 +146,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
   const [rowDeleted, setRowDeleted] = useState<boolean>(false);
   const [lastDeletedRowIndex, setLastDeletedRowIndex] = useState<number | null>(null);
 
-  const apiRef = useGridApiRef<GridApiCommon>();
+  const apiRef = useGridApiRef();
 
   const stableItems = useMemo((): AddressType[] => items, [items]);
 
@@ -190,7 +190,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
         apiRef.current.setPage(newPage);
 
         // Select the row
-        apiRef.current.setRowSelectionModel([lastAddedRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastAddedRowId]) });
 
         // Scroll to the row with a delay to ensure the page change has completed
         setTimeout(() => {
@@ -230,7 +230,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
 
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: editedIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([lastEditedRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastEditedRowId]) });
       }
       setRowEdited(false);
     }
@@ -252,7 +252,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
 
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: prevRowIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([prevRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([prevRowId]) });
       }
       setRowDeleted(false);
     }
@@ -290,7 +290,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
 
             // Set the page and select the row
             apiRef.current.setPage(newPage);
-            apiRef.current.setRowSelectionModel([lastAddedRowId]);
+            apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastAddedRowId]) });
 
             // Scroll to the row
             setTimeout(() => {
@@ -320,7 +320,7 @@ const useAddressTypeGridLogic = (): UseAddressTypeGridLogicReturn => {
     async (formdata: Partial<AddressType>) => {
       try {
         if (dialogType === "edit" && selectedItem?.id) {
-          await updateMutation.mutateAsync({ ...formdata, id: selectedItem.id });
+          await updateMutation.mutateAsync({ ...formdata, id: selectedItem.id } as UpdateAddressTypeRequest);
         } else if (dialogType === "add") {
           await createMutation.mutateAsync(formdata as any);
         }

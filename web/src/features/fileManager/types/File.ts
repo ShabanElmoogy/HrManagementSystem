@@ -1,4 +1,4 @@
-import { GridApiCommon } from "@mui/x-data-grid";
+import { GridApi } from "@mui/x-data-grid";
 export type FileDialogType = "upload" | "delete" | null;
 
 export interface FileItem {
@@ -23,7 +23,7 @@ export interface UseFileGridLogicReturn {
   selectedFile: FileItem | null;
   loading: boolean;
   files: FileItem[];
-  apiRef: React.MutableRefObject<GridApiCommon>;
+  apiRef: React.MutableRefObject<GridApi>;
   error: any;
   isFetching: boolean;
 

@@ -1,7 +1,7 @@
 // hooks/useDistrictGridLogic.ts - TanStack Query Implementation
 import { showToast } from "@/shared/components";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef, GridApiCommon } from "@mui/x-data-grid";
+import { useGridApiRef, GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { District, CreateDistrictRequest } from "../types/District";
@@ -21,7 +21,7 @@ interface UseDistrictGridLogicReturn {
   selectedDistrict: District | null;
   loading: boolean;
   districts: District[];
-  apiRef: React.MutableRefObject<GridApiCommon>;
+  apiRef: React.MutableRefObject<GridApi>;
   error: any;
   isFetching: boolean;
 
@@ -142,7 +142,7 @@ const useDistrictGridLogic = (): UseDistrictGridLogicReturn => {
   const [rowDeleted, setRowDeleted] = useState<boolean>(false);
   const [lastDeletedRowIndex, setLastDeletedRowIndex] = useState<number | null>(null);
 
-  const apiRef = useGridApiRef<GridApiCommon>();
+  const apiRef = useGridApiRef();
 
   const stableDistricts = useMemo((): District[] => districts, [districts]);
 
@@ -226,7 +226,7 @@ const useDistrictGridLogic = (): UseDistrictGridLogicReturn => {
       const lastPage = Math.floor(lastRowIndex / pageSize);
       
       apiRef.current.setPage(lastPage);
-      apiRef.current.setRowSelectionModel([lastRowId]);
+      apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastRowId]) });
       
       setTimeout(() => {
         if (apiRef.current) {
@@ -246,7 +246,7 @@ const useDistrictGridLogic = (): UseDistrictGridLogicReturn => {
         const newPage = Math.floor(editedIndex / pageSize);
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: editedIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([lastEditedRowId!]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastEditedRowId!]) });
       }
       setRowEdited(false);
     }
@@ -263,7 +263,7 @@ const useDistrictGridLogic = (): UseDistrictGridLogicReturn => {
         const newPage = Math.floor(prevRowIndex / pageSize);
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: prevRowIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([prevRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([prevRowId]) });
       }
       setRowDeleted(false);
     }

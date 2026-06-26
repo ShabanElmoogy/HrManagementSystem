@@ -19,6 +19,13 @@ export interface SimpleState {
   isDeleted: boolean;
 }
 
+export interface CreateDistrictRequest {
+  nameAr: string;
+  nameEn: string;
+  code: string;
+  stateId: number;
+}
+
 export interface UpdateDistrictRequest extends CreateDistrictRequest {
   id: string | number;
 }

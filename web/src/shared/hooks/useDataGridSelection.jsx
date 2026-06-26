@@ -18,7 +18,7 @@ const useDataGridSelection = (
       const newPage = Math.floor(lastRowIndex / pageSize);
 
       apiRef.current.setPage(newPage);
-      apiRef.current.setRowSelectionModel([lastAddedRowId]);
+      apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastAddedRowId]) });
 
       setTimeout(() => {
         apiRef.current.scrollToIndexes({

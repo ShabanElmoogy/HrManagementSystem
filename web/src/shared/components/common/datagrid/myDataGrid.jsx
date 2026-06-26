@@ -489,6 +489,37 @@ const MyDataGrid = ({
     return () => clearTimeout(timer);
   }, [apiRef, rows, lastAddedId, lastEditedId, lastDeletedIndex]);
 
+  // ── Auto-select first row on initial data load ────────────────────────────
+  // Fires once when rows first arrive (no pending add/edit/delete operation).
+  const initialSelectionDone = React.useRef(false);
+  React.useEffect(() => {
+    if (
+      !apiRef?.current ||
+      rows.length === 0 ||
+      initialSelectionDone.current ||
+      lastAddedId ||
+      lastEditedId ||
+      lastDeletedIndex !== null
+    )
+      return;
+
+    initialSelectionDone.current = true;
+
+    setTimeout(() => {
+      if (!apiRef.current) return;
+      const orderedIds = apiRef.current.getSortedRowIds?.() ?? rows.map((r) => r.id);
+      if (orderedIds.length === 0) return;
+      const firstId = orderedIds[0];
+      apiRef.current.setRowSelectionModel({
+        type: "include",
+        ids: new Set([firstId]),
+      });
+      apiRef.current.scrollToIndexes?.({ rowIndex: 0 });
+      // Sync the navigation counter in the footer
+      navigationUpdateRef.current?.();
+    }, 150);
+  }, [apiRef, rows, lastAddedId, lastEditedId, lastDeletedIndex]);
+
   const getLocaleText = () => {
     if (theme.direction !== "rtl") return {};
     return {

@@ -1,7 +1,7 @@
 // hooks/useStateGridLogic.ts - TanStack Query Implementation
 import { showToast } from "@/shared/components";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef, GridApiCommon } from "@mui/x-data-grid";
+import { useGridApiRef, GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { State, CreateStateRequest } from "../types/State";
@@ -11,7 +11,7 @@ import {
   useDeleteState,
   useUpdateState,
 } from "./useStateQueries";
-import { useInvalidateStates } from "./useStateQueries";
+
 
 export type DialogType = "add" | "edit" | "view" | "delete" | null;
 
@@ -21,7 +21,7 @@ interface UseStateGridLogicReturn {
   selectedState: State | null;
   loading: boolean;
   states: State[];
-  apiRef: React.MutableRefObject<GridApiCommon>;
+  apiRef: React.MutableRefObject<GridApi>;
   error: any;
   isFetching: boolean;
 
@@ -152,7 +152,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
   const [rowDeleted, setRowDeleted] = useState<boolean>(false);
   const [lastDeletedRowIndex, setLastDeletedRowIndex] = useState<number | null>(null);
 
-  const apiRef = useGridApiRef<GridApiCommon>();
+  const apiRef = useGridApiRef();
 
   const stableStates = useMemo((): State[] => states, [states]);
 
@@ -236,7 +236,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
         const newPage = Math.floor(newRowIndex / pageSize);
         
         apiRef.current.setPage(newPage);
-        apiRef.current.setRowSelectionModel([lastAddedRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastAddedRowId]) });
         
         setTimeout(() => {
           apiRef.current.scrollToIndexes({ rowIndex: newRowIndex, colIndex: 0 });
@@ -272,7 +272,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
             const newPage = Math.floor(newRowIndex / pageSize);
             
             apiRef.current.setPage(newPage);
-            apiRef.current.setRowSelectionModel([lastAddedRowId]);
+            apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastAddedRowId]) });
             
             setTimeout(() => {
               if (apiRef.current) {
@@ -298,7 +298,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
         const newPage = Math.floor(editedIndex / pageSize);
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: editedIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([lastEditedRowId!]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([lastEditedRowId!]) });
       }
       setRowEdited(false);
     }
@@ -318,7 +318,7 @@ const useStateGridLogic = (): UseStateGridLogicReturn => {
         
         apiRef.current.setPage(newPage);
         apiRef.current.scrollToIndexes({ rowIndex: prevRowIndex, colIndex: 0 });
-        apiRef.current.setRowSelectionModel([prevRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([prevRowId]) });
       }
       setRowDeleted(false);
     }

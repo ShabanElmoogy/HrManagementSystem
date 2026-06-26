@@ -1,6 +1,6 @@
 import { showToast } from "@/shared/components";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef, GridApiCommon } from "@mui/x-data-grid";
+import { useGridApiRef, GridApi } from "@mui/x-data-grid";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Country, CreateCountryRequest } from "../types/Country";
@@ -18,7 +18,7 @@ interface UseCountryGridLogicReturn {
   selectedCountry: Country | null;
   loading: boolean;
   countries: Country[];
-  apiRef: React.MutableRefObject<GridApiCommon>;
+  apiRef: React.MutableRefObject<GridApi>;
   error: Error | null;
   isFetching: boolean;
   openDialog: (type: DialogType, country?: Country | null) => void;
@@ -43,7 +43,7 @@ interface UseCountryGridLogicReturn {
  * Called only after the refetch has completed so the row is guaranteed to exist.
  */
 function scrollGridToRow(
-  apiRef: React.MutableRefObject<GridApiCommon>,
+  apiRef: React.MutableRefObject<GridApi>,
   rows: Country[],
   rowId: number | null
 ) {
@@ -52,7 +52,7 @@ function scrollGridToRow(
   if (index < 0) return;
   const pageSize = apiRef.current.state.pagination.paginationModel.pageSize;
   apiRef.current.setPage(Math.floor(index / pageSize));
-  apiRef.current.setRowSelectionModel([rowId]);
+  apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([rowId]) });
   setTimeout(() => {
     apiRef.current?.scrollToIndexes({ rowIndex: index, colIndex: 0 });
   }, 300);
@@ -89,30 +89,30 @@ const useCountryGridLogic = (): UseCountryGridLogicReturn => {
   const [lastEditedRowId, setLastEditedRowId] = useState<number | null>(null);
   const [lastDeletedRowIndex, setLastDeletedRowIndex] = useState<number | null>(null);
 
-  const apiRef = useGridApiRef<GridApiCommon>();
+  const apiRef = useGridApiRef();
 
   // ── Grid scroll effects ───────────────────────────────────────────────────
   // Wait for isFetching to finish so the new row is in `countries` before scrolling.
 
   useEffect(() => {
-    if (!lastAddedRowId || loading || isFetching || countries.length === 0) return;
+    if (!lastAddedRowId || loading || isFetching || countries.length === 0) return undefined;
     scrollGridToRow(apiRef, countries, lastAddedRowId);
     const timer = setTimeout(() => setLastAddedRowId(null), 4000);
     return () => clearTimeout(timer);
   }, [lastAddedRowId, countries, loading, isFetching]);
 
   useEffect(() => {
-    if (!lastEditedRowId || loading || countries.length === 0) return;
+    if (!lastEditedRowId || loading || countries.length === 0) return undefined;
     scrollGridToRow(apiRef, countries, lastEditedRowId);
     const timer = setTimeout(() => setLastEditedRowId(null), 4000);
     return () => clearTimeout(timer);
   }, [lastEditedRowId, countries, loading]);
 
   useEffect(() => {
-    if (lastDeletedRowIndex === null || loading || countries.length === 0) return;
+    if (lastDeletedRowIndex === null || loading || countries.length === 0) return undefined;
     const prevIndex = Math.max(0, Math.min(lastDeletedRowIndex - 1, countries.length - 1));
     const prevId = countries[prevIndex]?.id;
-    if (prevId == null) return;
+    if (prevId == null) return undefined;
     const numericId = typeof prevId === "string" ? parseInt(prevId, 10) : prevId;
     scrollGridToRow(apiRef, countries, numericId);
     const timer = setTimeout(() => setLastDeletedRowIndex(null), 4000);

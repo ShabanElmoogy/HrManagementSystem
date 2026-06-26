@@ -1,7 +1,7 @@
 // hooks/useFileGridLogic.ts - TanStack Query Implementation
 import { showToast } from "@/shared/components";
 import { extractErrorMessage } from "@/shared/utils";
-import { useGridApiRef, GridApiCommon } from "@mui/x-data-grid";
+import { useGridApiRef } from "@mui/x-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -96,7 +96,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
     string | null
   >(null);
 
-  const apiRef = useGridApiRef<GridApiCommon>();
+  const apiRef = useGridApiRef();
 
   // Reliable navigation helper: change page if needed, then select and scroll
   const navigateTo = useCallback(
@@ -111,7 +111,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
       const finalize = () => {
         const cur: any = apiRef.current;
         if (!cur) return;
-        cur.setRowSelectionModel([targetRowId]);
+        cur.setRowSelectionModel({ type: "include", ids: new Set([targetRowId]) });
         cur.scrollToIndexes({ rowIndex: rowIndexOnPage, colIndex: 0 });
       };
 
@@ -172,7 +172,7 @@ const useFileGridLogic = (): UseFileGridLogicReturn => {
         const rowIndexOnPage = prevSortedIndex % pageSize;
 
         apiRef.current.setPage(newPage);
-        apiRef.current.setRowSelectionModel([prevRowId]);
+        apiRef.current.setRowSelectionModel({ type: "include", ids: new Set([prevRowId]) });
         apiRef.current.scrollToIndexes({
           rowIndex: rowIndexOnPage,
           colIndex: 0,

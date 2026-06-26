@@ -19,7 +19,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "ignoreDeprecations": "6.0",
+
     // TypeScript strict settings - gradually enable for better error detection
     "strict": false,
     "noImplicitAny": true,
