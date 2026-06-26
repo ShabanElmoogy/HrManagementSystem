@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button, Card, CardContent, Grid, Chip, IconButton, Tooltip } from '@mui/material';
-import { PlayArrow, Stop, Pause, PlayCircleOutline, LocationOn, AccessTime } from '@mui/icons-material';
+import { PlayArrow, Stop, Pause, PlayCircleOutlined, LocationOn, AccessTime } from '@mui/icons-material';
 import { TimeEntry, BreakEntry } from '../../types/Employee';
 
 interface TimeClockProps {
@@ -260,7 +260,7 @@ export const TimeClock: React.FC<TimeClockProps> = ({
                 fullWidth
                 variant="outlined"
                 color={isOnBreak ? "success" : "warning"}
-                startIcon={isOnBreak ? <PlayCircleOutline /> : <Pause />}
+                startIcon={isOnBreak ? <PlayCircleOutlined /> : <Pause />}
                 onClick={isOnBreak ? handleBreakEnd : () => handleBreakStart('short-break')}
                 disabled={loading}
                 size="large"

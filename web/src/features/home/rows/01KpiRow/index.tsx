@@ -11,7 +11,7 @@ import {
   School,
   SentimentSatisfiedAlt,
   TrendingDown,
-  WorkOutline,
+  WorkOutlined,
 } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 import {
@@ -31,7 +31,7 @@ const KpiRow = ({ showAll = false }: KpiRowProps) => {
       kpi.title === "Total Employees"
         ? PeopleAlt
         : kpi.title === "Open Positions"
-        ? WorkOutline
+        ? WorkOutlined
         : kpi.title === "Monthly Payroll"
         ? MonetizationOn
         : PublicIcon,
@@ -121,7 +121,7 @@ const KpiRow = ({ showAll = false }: KpiRowProps) => {
               value={openPositionsByDept.reduce((s, d) => s + d.value, 0)}
               previousValue={46}
               target={40}
-              icon={WorkOutline}
+              icon={WorkOutlined}
               color="secondary"
               showTrend
               showProgress

@@ -4,7 +4,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { alpha, Avatar, Box, Divider, Stack, Typography } from "@mui/material";
+import { alpha, Avatar, Box, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { gradientButtonStyle } from "../../../../constants/styles";
@@ -155,13 +155,13 @@ const LoginForm = ({
         loading={false}
         disabled={isMainSubmitting || isUserSubmitting || isAdminSubmitting}
       />
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Box sx={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", mt: 2, pb: 1 }}>
         {/* Register Link */}
         <RegisterLink t={t} theme={theme} reset={reset} appRoutes={appRoutes} />
 
         {/* Settings Button */}
         <SettingsButton theme={theme} onOpenApiSettings={onOpenApiSettings} />
-      </Stack>
+      </Box>
     </Box>
   );
 };
@@ -286,7 +286,7 @@ const DividerWithText = ({ t }: { t: any }) => (
  * Displays the link to register page
  */
 const RegisterLink = ({ t, theme, reset, appRoutes }: { t: any; theme: any; reset: any; appRoutes: any }) => (
-  <Typography variant="body2" sx={{ mt: 1, textAlign: "center" }}>
+  <Typography variant="body2">
     {t("auth.dontHaveAccount")}{" "}
     <Link
       to={appRoutes.register}
@@ -312,26 +312,26 @@ const RegisterLink = ({ t, theme, reset, appRoutes }: { t: any; theme: any; rese
 const SettingsButton = ({ theme, onOpenApiSettings }: { theme: any; onOpenApiSettings: any }) => (
   <Box
     sx={{
-      display: "flex",
-      justifyContent: "center",
-      mt: 1,
+      position: "absolute",
+      right: 0,
     }}
   >
     <MyButton
       type="button"
       onClick={onOpenApiSettings}
       size="small"
-      startIcon={<SettingsIcon />}
+      startIcon={<SettingsIcon sx={{ fontSize: 18 }} />}
       gradientColors={["#607d8b", "#78909c"]}
       hoverColors={["#455a64", "#546e7a"]}
       sx={{
+        width: 32,
+        height: 32,
         minWidth: "auto",
-        px: 2,
-        py: 0.5,
-        borderRadius: 4,
+        p: 0,
+        borderRadius: 2,
         boxShadow: `0 2px 8px ${alpha(theme.palette.primary.main, 0.15)}`,
         "& .MuiButton-startIcon": {
-          mx: "auto",
+          m: 0,
         },
       }}
       children={undefined}

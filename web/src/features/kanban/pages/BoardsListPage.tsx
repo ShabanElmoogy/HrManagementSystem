@@ -5,7 +5,7 @@ import {
   useUpdateBoard,
   type KanbanBoard,
 } from "@/features/kanban";
-import { Add, Archive, DeleteOutline, Edit, OpenInNew } from "@mui/icons-material";
+import { Add, Archive, DeleteOutlined, Edit, OpenInNew } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -254,7 +254,7 @@ export default function BoardsListPage() {
                     </Tooltip>
                     <Tooltip title="Delete">
                       <IconButton color="error" onClick={() => handleDelete(b)}>
-                        <DeleteOutline />
+                        <DeleteOutlined />
                       </IconButton>
                     </Tooltip>
                   </Stack>
