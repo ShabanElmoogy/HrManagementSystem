@@ -49,7 +49,7 @@ const PersonalInfoHeader = ({
           `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
       }}
     >
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
         <Chip
           size="small"
           label={isEditing ? t("actions.editingMode") : t("actions.viewOnly")}

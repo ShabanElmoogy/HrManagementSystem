@@ -122,7 +122,7 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={3}
-              alignItems="center"
+              sx={{ alignItems: "center" }}
             >
               {/* Profile Avatar Component */}
               <ProfileAvatar

@@ -32,16 +32,14 @@ const EmptyNotifications = () => {
       <Typography
         variant="body1"
         color="text.secondary"
-        textAlign="center"
-        fontWeight="medium"
+        sx={{ textAlign: "center", fontWeight: "medium" }}
       >
         {t("noNotifications") || "No notifications yet"}
       </Typography>
       <Typography
         variant="body2"
         color="text.secondary"
-        textAlign="center"
-        sx={{ mt: 1 }}
+        sx={{ textAlign: "center", mt: 1 }}
       >
         {t("checkBackLater") ||
           "When you get notifications, they'll show up here"}

@@ -15,9 +15,7 @@ const GlobalPresenceRow = ({ showViewAll = true }: GlobalPresenceRowProps) => {
       <Grid size={{ xs: 12 }}>
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: 1 }}
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
         >
           <Typography variant="subtitle1">Global Presence Overview</Typography>
           {showViewAll && (

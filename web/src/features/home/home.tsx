@@ -66,7 +66,7 @@ const Home = () => {
               : `0 12px 40px ${alpha(theme.palette.primary.main, 0.18)}`,
         }}
       >
-        <Grid gap={2}>
+        <Grid sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
           {isUpLg && (
             <MyHeader
               isDashboard
@@ -86,9 +86,7 @@ const Home = () => {
       <Section title="Key KPIs" subtitle="At-a-glance performance metrics">
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 1 }}
+          sx={{ alignItems: "center", justifyContent: "flex-end", mb: 1 }}
         >
           <Button
             size="small"
@@ -110,9 +108,7 @@ const Home = () => {
       >
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: 1 }}
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
         >
           <Typography variant="h6">Trends Overview</Typography>
           <Button
@@ -145,9 +141,7 @@ const Home = () => {
       >
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: 1 }}
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
         >
           <Typography variant="h6">Health & Pipeline Overview</Typography>
           <Button
@@ -170,9 +164,7 @@ const Home = () => {
       >
         <Stack
           direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ mb: 1 }}
+          sx={{ alignItems: "center", justifyContent: "space-between", mb: 1 }}
         >
           <Typography variant="h6">Attendance Overview</Typography>
           <Button

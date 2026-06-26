@@ -38,7 +38,7 @@ const KpiRow = ({ showAll = false }: KpiRowProps) => {
   }));
 
   return (
-    <Grid container spacing={2} alignItems="stretch">
+    <Grid container spacing={2} sx={{ alignItems: "stretch" }}>
       {(showAll ? kpis : kpis.slice(0, 4)).map((kpi, idx) => (
         <Grid key={idx} size={{ xs: 12, sm: 6, lg: 3 }}>
           <MetricCard

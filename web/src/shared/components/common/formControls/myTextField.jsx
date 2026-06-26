@@ -431,12 +431,11 @@ const MyTextField = ({
 
     return (
       <Box sx={{ width: "100%", mb: 2.5 }}>
-        <Stack direction="row" alignItems="center" spacing={2}>
+        <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
           <Typography
             variant="subtitle2"
             color="info.light"
-            minWidth={120}
-            fontWeight="bold"
+            sx={{ minWidth: 120, fontWeight: "bold" }}
           >
             {actualLabel}
           </Typography>

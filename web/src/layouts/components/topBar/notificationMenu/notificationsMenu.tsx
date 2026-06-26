@@ -77,23 +77,25 @@ const NotificationsMenu = ({
       open={open}
       onClose={onClose}
       disableScrollLock={true}
-      PaperProps={{
-        elevation: 4,
-        sx: {
-          width: isMobileView ? 320 : 360,
-          maxHeight: "80vh",
-          mt: 1.5,
-          p: 0,
-          overflow: "hidden",
-          border: "1px solid",
-          borderColor: "divider",
-          borderRadius: 2,
-          display: "flex",
-          flexDirection: "column",
-          // Adjust margins for RTL
-          ml: isRtl ? 1.5 : "auto",
-          mr: isRtl ? "auto" : 1.5,
-        },
+      slotProps={{
+        paper: {
+          elevation: 4,
+          sx: {
+            width: isMobileView ? 320 : 360,
+            maxHeight: "80vh",
+            mt: 1.5,
+            p: 0,
+            overflow: "hidden",
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: 2,
+            display: "flex",
+            flexDirection: "column",
+            // Adjust margins for RTL
+            ml: isRtl ? 1.5 : "auto",
+            mr: isRtl ? "auto" : 1.5,
+          },
+        }
       }}
       // Adjust menu positioning for RTL
       transformOrigin={{

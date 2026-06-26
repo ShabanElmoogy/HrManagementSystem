@@ -35,7 +35,7 @@ const SecurityHeader = ({
   const theme = useTheme();
 
   return (
-    <Stack direction="row" spacing={2} alignItems="center" mb={3}>
+    <Stack direction="row" spacing={2} sx={{ alignItems: "center", mb: 3 }}>
       <Box
         sx={{
           width: 48,
@@ -60,11 +60,11 @@ const SecurityHeader = ({
         />
       </Box>
 
-      <Box flexGrow={1}>
+      <Box sx={{ flexGrow: 1 }}>
         <Typography
           variant="h5"
-          fontWeight="700"
           sx={{
+            fontWeight: 700,
             letterSpacing: "-0.02em",
             background:
               theme.palette.mode === "dark"
@@ -102,7 +102,7 @@ const SecurityHeader = ({
           }}
         />
       ) : (
-        <Stack direction="row" spacing={1} alignItems="center">
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
           {/* Cancel button - only visible in edit mode */}
           {isEditing && (
             <Tooltip title={t("actions.undoChanges")}>

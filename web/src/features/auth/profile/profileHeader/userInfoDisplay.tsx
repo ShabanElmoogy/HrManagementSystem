@@ -36,10 +36,12 @@ const UserInfoDisplay = ({ userData, uploadProgress }: UserInfoDisplayProps) => 
 
   return (
     <Stack
-      flexGrow={1}
       spacing={2}
-      alignItems={{ xs: "center", sm: "flex-start" }}
-      sx={{ textAlign: { xs: "center", sm: "left" } }}
+      sx={{
+        flexGrow: 1,
+        alignItems: { xs: "center", sm: "flex-start" },
+        textAlign: { xs: "center", sm: "left" },
+      }}
     >
       {/* Enhanced name display with badge */}
       <Box
@@ -66,11 +68,11 @@ const UserInfoDisplay = ({ userData, uploadProgress }: UserInfoDisplayProps) => 
           }}
         />
 
-        <Stack direction="row" alignItems="center" spacing={1}>
+        <Stack direction="row" sx={{ alignItems: "center" }} spacing={1}>
           <Typography
             variant="h4"
-            fontWeight="700"
             sx={{
+              fontWeight: 700,
               color:
                 theme.palette.mode === "dark"
                   ? "#fff"
@@ -122,9 +124,11 @@ const UserInfoDisplay = ({ userData, uploadProgress }: UserInfoDisplayProps) => 
         <Stack
           direction="row"
           spacing={2}
-          alignItems="center"
-          flexWrap="wrap"
-          justifyContent={{ xs: "center", sm: "flex-start" }}
+          sx={{
+            alignItems: "center",
+            flexWrap: "wrap",
+            justifyContent: { xs: "center", sm: "flex-start" },
+          }}
         >
           <Chip
             icon={<PersonIcon sx={{ fontSize: 18 }} />}

@@ -40,8 +40,8 @@ const QuickInsights = () => {
 
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
-        <Typography variant="subtitle1" fontWeight={700}>Quick Insights</Typography>
+      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Quick Insights</Typography>
         <Button size="small" variant="outlined" onClick={() => setExpanded((e) => !e)}>
           {expanded ? "Show Less" : "Show All"}
         </Button>
@@ -57,7 +57,7 @@ const QuickInsights = () => {
         {/* Hires (last 7d) */}
         <Grid size={{ xs: 12, md: 3.4 }}>
           <Paper sx={{ p: 1.25, borderRadius: 3, backgroundColor: alpha(theme.palette.background.paper, 0.7), border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`, height: "100%" }}>
-            <Stack direction="row" alignItems="center" gap={1}>
+            <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
               <GroupAdd color="primary" />
               <Box>
                 <Typography variant="caption" color="text.secondary">Hires (7d)</Typography>
@@ -70,11 +70,11 @@ const QuickInsights = () => {
         {/* Time to Hire */}
         <Grid size={{ xs: 12, md: 2.6 }}>
           <Paper sx={{ p: 1.25, borderRadius: 3, backgroundColor: alpha(theme.palette.background.paper, 0.7), border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`, height: "100%" }}>
-            <Stack direction="row" alignItems="center" gap={1}>
+            <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
               <Schedule color="success" />
               <Box>
                 <Typography variant="caption" color="text.secondary">Time-to-Hire</Typography>
-                <Typography variant="subtitle2" fontWeight={800} color="success.main">{timeToHireDays} days</Typography>
+                <Typography variant="subtitle2" color="success.main" sx={{ fontWeight: 800 }}>{timeToHireDays} days</Typography>
               </Box>
             </Stack>
           </Paper>
@@ -83,7 +83,7 @@ const QuickInsights = () => {
         {/* Employee Satisfaction */}
         <Grid size={{ xs: 12, md: 3 }}>
           <Paper sx={{ p: 1.25, borderRadius: 3, backgroundColor: alpha(theme.palette.background.paper, 0.7), border: `1px solid ${alpha(theme.palette.info.main, 0.2)}`, height: "100%" }}>
-            <Stack direction="row" alignItems="center" gap={1}>
+            <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
               <Box>
                 <Typography variant="caption" color="text.secondary">Satisfaction (7d)</Typography>
                 <SparklineChart data={sparklineSatisfaction} type="line" width={100} height={40} color={theme.palette.info.main} showValue valueKey="value" />
@@ -95,7 +95,7 @@ const QuickInsights = () => {
         {/* Overtime Hours */}
         <Grid size={{ xs: 12, md: 3 }}>
           <Paper sx={{ p: 1.25, borderRadius: 3, backgroundColor: alpha(theme.palette.background.paper, 0.7), border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`, height: "100%" }}>
-            <Stack direction="row" alignItems="center" gap={1}>
+            <Stack direction="row" sx={{ alignItems: "center", gap: 1 }}>
               <Box>
                 <Typography variant="caption" color="text.secondary">Overtime (7d)</Typography>
                 <SparklineChart data={sparklineOvertime} type="bar" width={100} height={40} color={theme.palette.warning.main} showValue valueKey="value" />
