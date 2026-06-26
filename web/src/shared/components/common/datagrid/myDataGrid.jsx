@@ -22,6 +22,7 @@ const CustomFooterWithNavigation = ({
   onNavigationUpdate,
   paginationModel,
   onPaginationModelChange,
+  paginationDirectionRef,
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -110,6 +111,9 @@ const CustomFooterWithNavigation = ({
           model ??
           apiRef.current?.state?.pagination?.paginationModel ??
           paginationModel;
+        const isMovingToPreviousPage =
+          paginationDirectionRef?.current === "backward";
+
         setDisplayPaginationModel(nextModel);
 
         if (navigationInProgressRef.current) return;
@@ -124,18 +128,28 @@ const CustomFooterWithNavigation = ({
           if (orderedIds.length === 0) return;
 
           const firstIndexOnPage = page * pageSize;
-          const firstIdOnPage = orderedIds[firstIndexOnPage];
-          if (firstIdOnPage == null) return;
+          const selectedId = Array.from(
+            apiRef.current.getSelectedRows?.().keys?.() ?? []
+          )[0];
+          const selectedIndex = orderedIds.findIndex((id) => id === selectedId);
+          const movedBackFromLaterPage =
+            selectedIndex >= firstIndexOnPage + pageSize;
 
-          // Select the first row on the new page
+          const targetIndex = (isMovingToPreviousPage || movedBackFromLaterPage)
+            ? Math.min(firstIndexOnPage + pageSize - 1, orderedIds.length - 1)
+            : firstIndexOnPage;
+          const targetIdOnPage = orderedIds[targetIndex];
+          if (targetIdOnPage == null) return;
+          const rowIndexOnPage = targetIndex % pageSize;
+
+          // Select the edge row that matches pagination direction.
           apiRef.current.setRowSelectionModel({
             type: "include",
-            ids: new Set([firstIdOnPage]),
+            ids: new Set([targetIdOnPage]),
           });
-          apiRef.current.scrollToIndexes?.({ rowIndex: 0 });
+          apiRef.current.scrollToIndexes?.({ rowIndex: rowIndexOnPage });
 
-          // Update counter to reflect the new position (1-based)
-          setNavigationCounter(firstIndexOnPage + 1);
+          setNavigationCounter(targetIndex + 1);
         }, 100);
       }
     );
@@ -145,7 +159,7 @@ const CustomFooterWithNavigation = ({
       unsubscribeSort();
       unsubscribePagination();
     };
-  }, [apiRef, paginationModel, syncNavigationWithSelection]);
+  }, [apiRef, paginationDirectionRef, paginationModel, syncNavigationWithSelection]);
 
   // Helper: navigate to a specific 0-based row index
   const navigateToIndex = React.useCallback(
@@ -494,6 +508,7 @@ const MyDataGrid = ({
     page: 0,
     pageSize: 5,
   });
+  const paginationDirectionRef = React.useRef("forward");
 
   const handlePaginationModelChange = React.useCallback((modelOrUpdater) => {
     setPaginationModel((prev) => {
@@ -501,6 +516,14 @@ const MyDataGrid = ({
         typeof modelOrUpdater === "function"
           ? modelOrUpdater(prev)
           : modelOrUpdater;
+
+      if (next?.pageSize !== prev.pageSize) {
+        paginationDirectionRef.current = "forward";
+      } else if (next?.page < prev.page) {
+        paginationDirectionRef.current = "backward";
+      } else if (next?.page > prev.page) {
+        paginationDirectionRef.current = "forward";
+      }
 
       if (
         !next ||
@@ -662,6 +685,7 @@ const MyDataGrid = ({
                 rows={rows}
                 paginationModel={paginationModel}
                 onPaginationModelChange={handlePaginationModelChange}
+                paginationDirectionRef={paginationDirectionRef}
                 onNavigationUpdate={(updateFn) => {
                   navigationUpdateRef.current = updateFn;
                 }}
