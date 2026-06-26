@@ -26,12 +26,20 @@ const CustomFooterWithNavigation = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const isRTL = theme.direction === "rtl";
+  const [displayPaginationModel, setDisplayPaginationModel] =
+    React.useState(paginationModel);
+
+  React.useEffect(() => {
+    setDisplayPaginationModel(paginationModel);
+  }, [paginationModel]);
 
   // Get the current ordered row IDs (sorted order if grid sorting is active)
   const getOrderedIds = React.useCallback(() => {
     const api = apiRef?.current;
     if (api && typeof api.getSortedRowIds === "function") {
-      return api.getSortedRowIds();
+      const sorted = api.getSortedRowIds();
+      // Only use sorted IDs if grid has actually processed the rows
+      if (sorted.length > 0) return sorted;
     }
     return rows.map((r) => r.id);
   }, [apiRef, rows]);
@@ -76,7 +84,10 @@ const CustomFooterWithNavigation = ({
     }
   }, [getOrderedIds, syncNavigationWithSelection]);
 
-  // Listen to sort changes to re-sync counter
+  // Flag to suppress paginationModelChange auto-select when our own navigation caused the page change
+  const navigationInProgressRef = React.useRef(false);
+
+  // Listen to sort / pagination / selection changes to re-sync counter
   React.useEffect(() => {
     if (!apiRef?.current) return;
 
@@ -90,11 +101,51 @@ const CustomFooterWithNavigation = ({
       () => syncNavigationWithSelection()
     );
 
+    // Re-sync when MUI built-in pagination controls change the page.
+    // Skip if our own navigateToIndex triggered the page change.
+    const unsubscribePagination = apiRef.current.subscribeEvent(
+      "paginationModelChange",
+      (model) => {
+        const nextModel =
+          model ??
+          apiRef.current?.state?.pagination?.paginationModel ??
+          paginationModel;
+        setDisplayPaginationModel(nextModel);
+
+        if (navigationInProgressRef.current) return;
+        // Delay so the grid finishes rendering the new page first
+        setTimeout(() => {
+          if (!apiRef.current) return;
+          const state = apiRef.current.state;
+          const page = state?.pagination?.paginationModel?.page ?? 0;
+          const pageSize = state?.pagination?.paginationModel?.pageSize ?? 5;
+
+          const orderedIds = apiRef.current.getSortedRowIds?.() ?? [];
+          if (orderedIds.length === 0) return;
+
+          const firstIndexOnPage = page * pageSize;
+          const firstIdOnPage = orderedIds[firstIndexOnPage];
+          if (firstIdOnPage == null) return;
+
+          // Select the first row on the new page
+          apiRef.current.setRowSelectionModel({
+            type: "include",
+            ids: new Set([firstIdOnPage]),
+          });
+          apiRef.current.scrollToIndexes?.({ rowIndex: 0 });
+
+          // Update counter to reflect the new position (1-based)
+          setNavigationCounter(firstIndexOnPage + 1);
+        }, 100);
+      }
+    );
+
     return () => {
       unsubscribeSelection();
       unsubscribeSort();
+      unsubscribePagination();
     };
-  }, [apiRef, syncNavigationWithSelection]);
+  }, [apiRef, paginationModel, syncNavigationWithSelection]);
 
   // Helper: navigate to a specific 0-based row index
   const navigateToIndex = React.useCallback(
@@ -107,7 +158,15 @@ const CustomFooterWithNavigation = ({
       const targetPage = Math.floor(targetIndex / pageSize);
       const rowIndexOnPage = targetIndex % pageSize;
 
+      // Update counter immediately so UI reflects the change on this click
       setNavigationCounter(targetIndex + 1);
+      setDisplayPaginationModel((prev) => ({
+        ...prev,
+        page: targetPage,
+      }));
+
+      // Mark that WE are causing the page change — suppress the paginationModelChange auto-select
+      navigationInProgressRef.current = true;
       onPaginationModelChange((prev) => ({ ...prev, page: targetPage }));
 
       setTimeout(() => {
@@ -116,7 +175,9 @@ const CustomFooterWithNavigation = ({
           ids: new Set([targetRowId]),
         });
         apiRef?.current?.scrollToIndexes({ rowIndex: rowIndexOnPage });
-      }, 100);
+        // Release the guard after our own selection is done
+        navigationInProgressRef.current = false;
+      }, 150);
     },
     [apiRef, getOrderedIds, paginationModel, onPaginationModelChange]
   );
@@ -127,8 +188,11 @@ const CustomFooterWithNavigation = ({
   const handleGoToNextRecord = () => navigateToIndex(navigationCounter);
 
   const orderedCount = getOrderedIds().length;
-  const totalPages = Math.max(1, Math.ceil(orderedCount / paginationModel.pageSize));
-  const currentPage = paginationModel.page + 1;
+  const totalPages = Math.max(
+    1,
+    Math.ceil(orderedCount / displayPaginationModel.pageSize)
+  );
+  const currentPage = displayPaginationModel.page + 1;
 
   // Icon components based on direction
   const FirstIcon = isRTL ? LastPageIcon : FirstPageIcon;
@@ -431,6 +495,24 @@ const MyDataGrid = ({
     pageSize: 5,
   });
 
+  const handlePaginationModelChange = React.useCallback((modelOrUpdater) => {
+    setPaginationModel((prev) => {
+      const next =
+        typeof modelOrUpdater === "function"
+          ? modelOrUpdater(prev)
+          : modelOrUpdater;
+
+      if (
+        !next ||
+        (next.page === prev.page && next.pageSize === prev.pageSize)
+      ) {
+        return prev;
+      }
+
+      return next;
+    });
+  }, []);
+
   // Clamp page to last valid page whenever row count changes.
   // This is the single source of truth — no apiRef.setPage needed.
   React.useEffect(() => {
@@ -554,7 +636,7 @@ const MyDataGrid = ({
           },
         }}
         paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
+        onPaginationModelChange={handlePaginationModelChange}
         pageSizeOptions={[5, 10, 25, 50]}
         sx={{
           ...dataGridStyles,
@@ -579,7 +661,7 @@ const MyDataGrid = ({
                 apiRef={apiRef}
                 rows={rows}
                 paginationModel={paginationModel}
-                onPaginationModelChange={setPaginationModel}
+                onPaginationModelChange={handlePaginationModelChange}
                 onNavigationUpdate={(updateFn) => {
                   navigationUpdateRef.current = updateFn;
                 }}
