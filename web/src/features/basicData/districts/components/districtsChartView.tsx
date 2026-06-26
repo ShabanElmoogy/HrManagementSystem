@@ -37,12 +37,12 @@ const DistrictsChartView: React.FC<DistrictsChartViewProps> = ({
 
   // Handle loading state
   if (loading) {
-    return <LoadingChartState />;
+    return <LoadingChartState t={t} />;
   }
 
   // Handle empty state
   if (!districts || districts.length === 0) {
-    return <EmptyChartState onAdd={onAdd} />;
+    return <EmptyChartState t={t} onAdd={onAdd} />;
   }
 
   // Prepare chart data
@@ -67,28 +67,29 @@ const DistrictsChartView: React.FC<DistrictsChartViewProps> = ({
         totalCodes={totalCodes}
         activeDistricts={activeDistricts}
         avgPerState={avgPerState}
+        t={t}
       />
 
       {/* Charts */}
       <Grid container spacing={3}>
         {/* Districts by State - Bar Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <StateBarChart data={stateData} />
+          <StateBarChart data={stateData} t={t} />
         </Grid>
 
         {/* Districts by State - Pie Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <StatePieChart data={stateData} colors={colors} />
+          <StatePieChart data={stateData} colors={colors} t={t} />
         </Grid>
 
         {/* District Code Prefixes */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <DistrictCodeChart data={codeData} />
+          <DistrictCodeChart data={codeData} t={t} />
         </Grid>
 
         {/* Timeline */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} />
+          <TimelineChart data={timelineData} t={t} />
         </Grid>
       </Grid>
 

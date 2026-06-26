@@ -107,6 +107,10 @@ const AddressTypeForm = ({
     return errorMessages;
   };
 
+  const handleErrorFound = (fieldName: string, fieldElement: HTMLElement): void => {
+    console.log(`Validation error in field: ${fieldName}`, fieldElement);
+  };
+
   return (
     <MyForm
       maxHeight="58vh"

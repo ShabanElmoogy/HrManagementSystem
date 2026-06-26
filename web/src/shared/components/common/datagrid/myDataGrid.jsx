@@ -111,7 +111,10 @@ const CustomFooterWithNavigation = ({
       onPaginationModelChange((prev) => ({ ...prev, page: targetPage }));
 
       setTimeout(() => {
-        apiRef?.current?.setRowSelectionModel([targetRowId]);
+        apiRef?.current?.setRowSelectionModel({
+          type: "include",
+          ids: new Set([targetRowId]),
+        });
         apiRef?.current?.scrollToIndexes({ rowIndex: rowIndexOnPage });
       }, 100);
     },
@@ -400,6 +403,24 @@ const MyDataGrid = ({
 }) => {
   const theme = useTheme();
 
+  // Patch apiRef.current.setRowSelectionModel to support both old array syntax and new object syntax in MUI v9
+  if (apiRef?.current) {
+    const originalSetRowSelectionModel = apiRef.current.setRowSelectionModel;
+    if (originalSetRowSelectionModel && !originalSetRowSelectionModel.isPatched) {
+      const patched = function (model, reason) {
+        if (Array.isArray(model)) {
+          return originalSetRowSelectionModel.call(apiRef.current, {
+            type: "include",
+            ids: new Set(model),
+          }, reason);
+        }
+        return originalSetRowSelectionModel.call(apiRef.current, model, reason);
+      };
+      patched.isPatched = true;
+      apiRef.current.setRowSelectionModel = patched;
+    }
+  }
+
   // ── Controlled pagination ─────────────────────────────────────────────────
   // Using controlled paginationModel instead of initialState so we can clamp
   // the page whenever rows shrink (e.g. after a delete). With initialState the
@@ -442,7 +463,10 @@ const MyDataGrid = ({
       setPaginationModel((prev) => ({ ...prev, page: targetPage }));
 
       setTimeout(() => {
-        apiRef.current?.setRowSelectionModel([id]);
+        apiRef.current?.setRowSelectionModel({
+          type: "include",
+          ids: new Set([id]),
+        });
         apiRef.current?.scrollToIndexes({ rowIndex: rowIndexOnPage });
         navigationUpdateRef.current?.();
       }, 200);

@@ -32,12 +32,12 @@ const StatesChartView: React.FC<StatesChartViewProps> = ({
 
   // Handle loading state
   if (loading) {
-    return <LoadingChartState />;
+    return <LoadingChartState t={t} />;
   }
 
   // Handle empty state
   if (!states || states.length === 0) {
-    return <EmptyChartState onAdd={onAdd} />;
+    return <EmptyChartState t={t} onAdd={onAdd} />;
   }
 
   // Prepare chart data
@@ -65,28 +65,29 @@ const StatesChartView: React.FC<StatesChartViewProps> = ({
         totalCountries={totalCountries}
         avgStatesPerCountry={avgStatesPerCountry}
         completionRate={completionRate}
+        t={t}
       />
 
       {/* Charts */}
       <Grid container spacing={3}>
         {/* States by Country - Bar Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <CountryBarChart data={countryData} />
+          <CountryBarChart data={countryData} t={t} />
         </Grid>
 
         {/* States by Country - Pie Chart */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <CountryPieChart data={countryData} colors={colors} />
+          <CountryPieChart data={countryData} colors={colors} t={t} />
         </Grid>
 
         {/* State Distribution */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <StateDistributionChart data={distributionData} />
+          <StateDistributionChart data={distributionData} t={t} />
         </Grid>
 
         {/* Timeline */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <TimelineChart data={timelineData} />
+          <TimelineChart data={timelineData} t={t} />
         </Grid>
       </Grid>
 
