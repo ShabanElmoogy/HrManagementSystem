@@ -53,7 +53,8 @@ class ReportApiService {
       }
 
       // Construct full URL with query string
-      const url = `${this.baseURL}${endpoint}${
+      const safeEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+      const url = `${this.baseURL}${safeEndpoint}${
         queryParams.toString() ? `?${queryParams.toString()}` : ""
       }`;
 
@@ -86,7 +87,8 @@ class ReportApiService {
         delete headers["Content-Type"];
       }
 
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
+      const safeEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+      const response = await fetch(`${this.baseURL}${safeEndpoint}`, {
         method: "POST",
         headers,
         body: data instanceof FormData ? data : JSON.stringify(data),

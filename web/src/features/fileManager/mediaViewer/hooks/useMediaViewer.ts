@@ -104,7 +104,6 @@ export default function useMediaViewer(): UseMediaViewerReturn {
         if (!isMounted) return;
 
         const res = await fileService.downloadStream(id);
-        console.log("res",res)
 
         if (!isMounted) return;
 

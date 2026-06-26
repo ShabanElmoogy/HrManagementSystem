@@ -41,22 +41,24 @@ const TextFieldWithClear = ({
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       // This ensures label behaves correctly
-      InputLabelProps={{
-        shrink: Boolean(searchText) || focused,
-      }}
-      InputProps={{
-        endAdornment: searchText ? (
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="clear search"
-              onClick={onClearClick}
-              disabled={loading}
-              edge="end"
-            >
-              <ClearIcon />
-            </IconButton>
-          </InputAdornment>
-        ) : null,
+      slotProps={{
+        inputLabel: {
+          shrink: Boolean(searchText) || focused,
+        },
+        input: {
+          endAdornment: searchText ? (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="clear search"
+                onClick={onClearClick}
+                disabled={loading}
+                edge="end"
+              >
+                <ClearIcon />
+              </IconButton>
+            </InputAdornment>
+          ) : null,
+        }
       }}
       {...props}
     />

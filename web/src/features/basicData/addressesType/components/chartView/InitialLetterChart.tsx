@@ -8,7 +8,7 @@ const InitialLetterChart: React.FC<InitialLetterChartProps> = ({ data, t }) => {
     <Card elevation={2}>
       <CardHeader 
         title={t("addressTypes.charts.byInitialLetter") || "Address Types by Initial Letter"}
-        titleTypographyProps={{ variant: 'h6', fontWeight: 600 }}
+        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
       />
       <CardContent>
         <BarChart

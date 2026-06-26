@@ -44,16 +44,15 @@ const UnifiedCardViewPagination = ({
     <Paper sx={{ mt: 3, p: 3 }}>
       <Stack
         direction={isCompact ? "column" : "row"}
-        justifyContent="space-between"
-        alignItems="center"
         spacing={2}
+        sx={{ justifyContent: "space-between", alignItems: "center" }}
       >
         {/* Left side - Showing info and items per page */}
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={2}
-          alignItems="center"
           sx={{
+            alignItems: "center",
             order: isCompact ? 1 : 1,
             flexDirection: isCompact ? "row" : undefined,
             justifyContent: isXs ? "center" : isCompact ? "space-between" : undefined,
@@ -66,7 +65,7 @@ const UnifiedCardViewPagination = ({
               : `${t("pagination.showing")} ${start}-${end} ${t("pagination.of")} ${totalItems} ${itemsLabel}`}
           </Typography>
 
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
             <Typography variant="body2" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>            
               {t("pagination.itemsPerPage")}
             </Typography>

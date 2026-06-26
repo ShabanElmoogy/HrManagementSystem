@@ -163,10 +163,12 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
                   placeholder={t("files.search")}
                   value={searchTerm}
                   onChange={(e) => onSearch(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
-                    ),
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
+                      ),
+                    }
                   }}
                   sx={{ width: "100%", maxWidth: 200 }}
                 />
@@ -272,10 +274,12 @@ const ExcelToolbar: React.FC<ExcelToolbarProps> = ({
               placeholder={t("files.searchInSheet")}
               value={searchTerm}
               onChange={(e) => onSearch(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
-                ),
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <SearchIcon sx={{ mr: 1, color: "text.secondary" }} />
+                  ),
+                }
               }}
               sx={{ width: "100%", maxWidth: 300 }}
             />

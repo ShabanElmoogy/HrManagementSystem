@@ -8,7 +8,7 @@ const LanguageDistributionChart: React.FC<LanguageDistributionChartProps> = ({ d
     <Card elevation={2}>
       <CardHeader
         title={t("addressTypes.charts.languageDistribution") || "Language Distribution"}
-        titleTypographyProps={{ variant: 'h6', fontWeight: 600 }}
+        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
       />
       <CardContent>
         <PieChart

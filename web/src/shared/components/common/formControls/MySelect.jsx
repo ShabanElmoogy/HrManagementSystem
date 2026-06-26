@@ -50,9 +50,13 @@ const MySelect = ({
             <TextField
               {...params}
               label={label}
-              InputProps={{
-                ...params.InputProps,
-                autoComplete: "new-password", // Disable browser autocomplete
+              slotProps={{
+                ...params.slotProps,
+                htmlInput: {
+                  ...params.inputProps, // Fallback for v6
+                  ...(params.slotProps?.htmlInput || {}),
+                  autoComplete: "new-password", // Disable browser autocomplete
+                },
               }}
             />
           )}

@@ -9,12 +9,10 @@ import {
   Grid,
   Tooltip,
 } from "@mui/material";
-import {
-  ErrorOutline,
-  Download,
-  ArrowBack,
-  Refresh,
-} from "@mui/icons-material";
+import ErrorOutline from "@mui/icons-material/ErrorOutlined";
+import Download from "@mui/icons-material/Download";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Refresh from "@mui/icons-material/Refresh";
 import { useSidebar } from "@/layouts/components/sidebar/sidebarContext";
 
 interface MediaErrorViewProps {
@@ -99,7 +97,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
             mb: 3,
           }}
         />
-        
+
         <Typography
           variant="h5"
           sx={{
@@ -111,7 +109,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
         >
           Preview Not Available
         </Typography>
-        
+
         <Typography
           variant="body1"
           sx={{
@@ -123,7 +121,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
         >
           {errorMessage}
         </Typography>
-        
+
         <Typography
           variant="body2"
           sx={{
@@ -148,7 +146,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
               Download File
             </Button>
           )}
-          
+
           {onRetry && (
             <Button
               variant="outlined"

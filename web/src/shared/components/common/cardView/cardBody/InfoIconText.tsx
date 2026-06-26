@@ -9,10 +9,10 @@ export const InfoIconText: React.FC<{
   secondary?: React.ReactNode;
   mb?: number;
 }> = ({ icon, primary, secondary, mb = 1 }) => (
-  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb }}>
+  <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb }}>
     {icon}
     <Box>
-      <Typography variant="body2" fontWeight="medium">
+      <Typography variant="body2" sx={{ fontWeight: "medium" }}>
         {primary}
       </Typography>
       {secondary && (

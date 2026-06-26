@@ -8,7 +8,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ data, t }) => {
     <Card elevation={2}>
       <CardHeader 
         title={t("addressTypes.charts.timeline") || "Address Types Added Over Time"}
-        titleTypographyProps={{ variant: 'h6', fontWeight: 600 }}
+        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
       />
       <CardContent>
         <LineChart

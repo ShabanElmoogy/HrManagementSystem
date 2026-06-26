@@ -119,9 +119,15 @@ export default defineConfig(({ mode }) => {
           port: 5173,
           proxy: {
             '/api': {
-              target: process.env.VITE_BACKEND_URL || 'http://localhost:3001',
+              target: process.env.VITE_BACKEND_URL || 'https://hr-managementsystem.runasp.net',
               changeOrigin: true,
               secure: false,
+            },
+            '/hubs': {
+              target: 'https://hr-managementsystem.runasp.net',
+              changeOrigin: true,
+              secure: false,
+              ws: true,
             },
           },
         }

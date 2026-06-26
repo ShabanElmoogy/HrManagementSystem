@@ -26,7 +26,7 @@ export const ViewLayoutProvider = ({ children }) => {
     autoSave: true,
     autoSaveDelay: 300,
     useResponsiveDefaults: true,
-    debugMode: process.env.NODE_ENV === "development",
+    debugMode: import.meta.env.DEV,
   });
 
   // Statistics about saved layouts

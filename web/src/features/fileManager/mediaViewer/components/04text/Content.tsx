@@ -33,7 +33,7 @@ const TextContent: React.FC<TextContentProps> = ({ loading, error, content, sear
       fullWidth
       multiline
       value={searchTerm && content ? content.replace(new RegExp(searchTerm, 'gi'), (m) => `🔍${m}🔍`) : content}
-      InputProps={{ readOnly: true }}
+      slotProps={{ input: { readOnly: true } }}
       variant="outlined"
       sx={{
         height: '100%',

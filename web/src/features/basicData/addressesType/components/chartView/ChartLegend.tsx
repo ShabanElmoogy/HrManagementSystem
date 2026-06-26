@@ -9,10 +9,10 @@ const ChartLegend: React.FC<ChartLegendProps> = ({ data, colors }) => {
     <Card elevation={1} sx={{ mt: 3 }}>
       <CardHeader 
         title="Chart Legend"
-        titleTypographyProps={{ variant: 'h6', fontWeight: 600 }}
+        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
       />
       <CardContent>
-        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+        <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap" }}>
           {data.map((item, index) => (
             <Chip
               key={item.name}

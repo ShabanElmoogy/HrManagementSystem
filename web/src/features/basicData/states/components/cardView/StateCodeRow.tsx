@@ -8,7 +8,7 @@ export interface StateCodeRowProps {
 }
 
 export const StateCodeRow: React.FC<StateCodeRowProps> = ({ label, code }) => (
-  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+  <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
     <LocationOn sx={{ fontSize: 16, color: "text.secondary" }} />
     <Typography variant="body2" color="text.secondary">
       {label}: {code || "N/A"}

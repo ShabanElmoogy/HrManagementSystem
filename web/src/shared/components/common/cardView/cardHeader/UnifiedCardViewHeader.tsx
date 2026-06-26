@@ -86,7 +86,7 @@ const UnifiedCardViewHeader = ({
       <TitleSection title={title} subtitle={subtitle} mainChipLabel={mainChipLabel} page={page} />
 
       {/* Search and Filter Controls */}
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={2} sx={{ alignItems: "center" }}>
         {/* Search Bar */}
         <Grid size={{ xs: 12, md: 4 }} sx={{ mb: 1 }}>
           <SearchBar

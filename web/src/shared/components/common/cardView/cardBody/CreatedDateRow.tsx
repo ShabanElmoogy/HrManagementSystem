@@ -17,7 +17,7 @@ export const CreatedDateRow: React.FC<{
   };
   return (
     <Box sx={{ mt: "auto" }}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
         <CalendarToday sx={{ fontSize: 14, color: "text.secondary" }} />
         <Typography variant="caption" color="text.secondary">
           {formatDate(date)}

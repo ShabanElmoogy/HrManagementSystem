@@ -14,7 +14,7 @@ export const TitleSection: React.FC<TitleSectionProps> = ({ title, subtitle, mai
   const theme = useTheme();
   const { t } = useTranslation();
   return (
-    <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 3 }}>
+    <Stack direction="row" spacing={2} sx={{ alignItems: "center", mb: 3 }}>
       <Avatar
         sx={{
           bgcolor: theme.palette.primary.main,
@@ -26,7 +26,7 @@ export const TitleSection: React.FC<TitleSectionProps> = ({ title, subtitle, mai
         <ViewModule sx={{ fontSize: 24 }} />
       </Avatar>
       <Box sx={{ flex: 1 }}>
-        <Typography variant="h4" color="primary.main" fontWeight="bold">
+        <Typography variant="h4" color="primary.main" sx={{ fontWeight: "bold" }}>
           {title}
         </Typography>
         {subtitle && (

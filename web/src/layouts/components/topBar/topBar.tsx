@@ -101,7 +101,10 @@ const TopBar = ({
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={handleDrawerOpen}
+                onClick={(e) => {
+                  handleDrawerOpen();
+                  e.currentTarget.blur();
+                }}
                 edge="start"
                 sx={[{ marginRight: 5 }, open && { display: "none" }]}
               >

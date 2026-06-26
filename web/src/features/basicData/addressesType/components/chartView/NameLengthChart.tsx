@@ -8,7 +8,7 @@ const NameLengthChart: React.FC<NameLengthChartProps> = ({ data, t }) => {
     <Card elevation={2}>
       <CardHeader 
         title={t("addressTypes.charts.nameLength") || "Name Length Distribution"}
-        titleTypographyProps={{ variant: 'h6', fontWeight: 600 }}
+        slotProps={{ title: { variant: 'h6', fontWeight: 600 } }}
       />
       <CardContent>
         <BarChart

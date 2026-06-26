@@ -36,9 +36,9 @@ export const CountryStatesSection: React.FC<CountryStatesSectionProps> = ({ coun
 
   return (
     <Box sx={{ mb: 2 }}>
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
         <LocationOn sx={{ fontSize: 16, color: "text.secondary" }} />
-        <Typography variant="body2" fontWeight="medium">
+        <Typography variant="body2" sx={{ fontWeight: "medium" }}>
           {t("countries.states") || "States"}
         </Typography>
         {(() => {
@@ -83,7 +83,7 @@ export const CountryStatesSection: React.FC<CountryStatesSectionProps> = ({ coun
                       title={`${state.nameEn}${state.nameAr ? ` / ${state.nameAr}` : ""}${state.code ? ` (${state.code})` : ""}`}
                       arrow
                     >
-                      <Stack direction="row" spacing={0.6} alignItems="center">
+                      <Stack direction="row" spacing={0.6} sx={{ alignItems: "center" }}>
                         <AppChip
                           size="small"
                           icon={<Box sx={{ width: 8, height: 8, bgcolor: colorMain, borderRadius: "50%" }} />}

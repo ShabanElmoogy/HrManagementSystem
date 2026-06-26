@@ -22,7 +22,9 @@ const Input = styled("input")({
   display: "none",
 });
 
-const DropZone = styled(Box)<{ isDragActive: boolean }>(
+const DropZone = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isDragActive",
+})<{ isDragActive: boolean }>(
   ({ theme, isDragActive }) => ({
     border: `2px dashed ${
       isDragActive ? theme.palette.primary.main : theme.palette.divider
@@ -160,7 +162,7 @@ const UploadExcel = ({
           color: isDragActive ? "primary" : "text.secondary",
         })}
 
-        <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} spacing={2}>
+        <Stack direction={"row"} spacing={2} sx={{ alignItems: "center", justifyContent: "center" }}>
           <Typography
             variant="h6"
             color="text.secondary"

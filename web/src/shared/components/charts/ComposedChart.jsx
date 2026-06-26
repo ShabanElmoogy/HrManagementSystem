@@ -52,7 +52,6 @@ const ComposedChart = ({
     return series.map((seriesConfig, index) => {
       const color = seriesConfig.color || colors[index % colors.length];
       const commonProps = {
-        key: seriesConfig.key,
         dataKey: seriesConfig.key,
         name: seriesConfig.name,
         yAxisId: seriesConfig.yAxisId || 'left',
@@ -63,6 +62,7 @@ const ComposedChart = ({
         case 'bar':
           return (
             <Bar
+              key={seriesConfig.key}
               {...commonProps}
               fill={color}
               radius={[4, 4, 0, 0]}
@@ -73,6 +73,7 @@ const ComposedChart = ({
         case 'line':
           return (
             <Line
+              key={seriesConfig.key}
               {...commonProps}
               type="monotone"
               stroke={color}
@@ -85,6 +86,7 @@ const ComposedChart = ({
         case 'area':
           return (
             <Area
+              key={seriesConfig.key}
               {...commonProps}
               type="monotone"
               stroke={color}

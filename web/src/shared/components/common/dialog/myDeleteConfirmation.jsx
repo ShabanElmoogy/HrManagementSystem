@@ -74,7 +74,7 @@ const MyDeleteConfirmation = ({
       maxWidth="sm"
       fullWidth
       disableScrollLock
-      TransitionComponent={SlideTransition}
+      slots={{ transition: SlideTransition }}
       keepMounted
       sx={{
         "& .MuiDialog-paper": {

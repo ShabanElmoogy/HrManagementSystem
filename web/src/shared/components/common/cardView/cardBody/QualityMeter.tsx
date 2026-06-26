@@ -16,11 +16,11 @@ export const QualityMeter: React.FC<{
 
   return (
     <Box sx={{ mb: 2 }}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 0.5 }}>
-        <Typography variant="caption" color="text.secondary" fontWeight="bold">
+      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 0.5 }}>
+        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: "bold" }}>
           {t("general.dataQuality")}
         </Typography>
-        <Typography variant="caption" color={qualityInfo.color} fontWeight="bold">
+        <Typography variant="caption" color={qualityInfo.color} sx={{ fontWeight: "bold" }}>
           {t(`general.${qualityInfo.key}`)?.toUpperCase()}
         </Typography>
       </Stack>
